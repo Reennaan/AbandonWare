@@ -1,0 +1,12 @@
+.gameImg{
+   width: 100%;
+   height: 200px;
+}
+
+.card{
+    height: 100px;
+}
+.platform{
+    color: #FD5F53;
+    font-family: "Poppins, Trebuchet MS";
+}

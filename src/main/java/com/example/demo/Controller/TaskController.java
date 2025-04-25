@@ -19,7 +19,7 @@ public class TaskController {
 
     //o spring injeta esse Model automaticamente serve como meio de transporte
     //do codigo para a view.
-    @GetMapping("/index")
+    @GetMapping("/")
     public String index (Model model) throws IOException {
         getAllGames(model);
         return "index";
@@ -35,23 +35,40 @@ public class TaskController {
 
 
 
-        List<Game> games = new ArrayList<>();
+
+        List<String> nameList = new ArrayList<>();
+        List<String> linkList = new ArrayList<>();
+        List<String> dateList = new ArrayList<>();
+        List<String> imgList = new ArrayList<>();
+        List<String> platformList = new ArrayList<>();
+
+
        for(int i = 1; i < gameNameList.size() ; i++){
-           Game game = new Game();
-           game.setId(i);
-           game.setImg(url+gameImgList.get(i).attr("src"));
-           game.setName(gameNameList.get(i).text());
-           game.setLink(url+gameNameList.get(i).attr("href"));
-           game.setDate(gameYearList.get(i).text());
-           game.setPlatform(gamePlatformsList.get(i).text());
-           games.add(game);
+
+           nameList.add(gameNameList.get(i).text());
+           imgList.add(url+gameImgList.get(i).attr("src"));
+           linkList.add(url+gameNameList.get(i).attr("href"));
+           dateList.add(gameYearList.get(i).text());
+           platformList.add(gamePlatformsList.get(i).text());
+
+
+
        }
+            System.out.println(imgList);
+
+           model.addAttribute("gameName", nameList);
+           model.addAttribute("imgSrc",imgList);
+           model.addAttribute("platform",platformList);
 
 
 
-        //model.addAttribute("popularGames", ListOfGame);
 
-        System.out.println(games);
+
+
+
+
+
+
 
 
     }

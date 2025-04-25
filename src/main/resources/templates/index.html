@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>AbandonWare</title>
 </head>
 <body>
     <h1>teste blablabla</h1>
-    <div th:utext="${popularGames}"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="gameName, stat : ${gameName}">
+                <div class="card h-100" style="width: 25rem; height: 20rem;">
+                    <img th:src="${imgSrc[stat.index]}" class="gameImg">
+                    <div class="card-body">
+                      <p class="card-text"  th:text="${gameName}"></p>
+                    </div>
+                    <ul class="platform list-group list-group-flush">
+                        <li class="platform list-group-item" th:text="${platform[stat.index]}"></li>
+                      </ul>
+                </div>
+            </div>  
+        </div>
+    </div>
 </body>
 </html>
