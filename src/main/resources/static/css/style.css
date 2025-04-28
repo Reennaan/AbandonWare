@@ -8,5 +8,50 @@
 }
 .platform{
     color: #FD5F53;
-    font-family: "Poppins, Trebuchet MS";
+    
+}
+
+.navbar-dark{
+    background-color: #1a1a1a !important;
+    
+    
+}
+
+body{
+    background-color: #1a1a1a;
+}
+.container-fluid{
+    display: flex;
+    
+    background-color: #1A1A1A;
+    width: 80%;
+    height: 80%;
+    border: 5px solid #323232 !important;
+    border-radius: 9px;
+    padding: 20px;
+    
+    
+}
+.border-custom{
+    border-bottom: 1px solid #323232 !important;
+}
+
+.jumbotron{
+    color: beige;
+    padding: 40px;
+}
+.card-games{
+    width: 14rem;
+    height: 2rem;
+    cursor: pointer;
+}
+.card-body{
+    height: 2rem;
+    max-height: 3rem;
+    
+}
+.platform-menu{
+    padding-left: 10px;
+    margin-left: 80px;
+    
 }

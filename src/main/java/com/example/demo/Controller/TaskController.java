@@ -1,13 +1,14 @@
 package com.example.demo.Controller;
 
 
-import com.example.demo.Model.Game;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,34 +45,44 @@ public class TaskController {
 
 
        for(int i = 1; i < gameNameList.size() ; i++){
-
            nameList.add(gameNameList.get(i).text());
            imgList.add(url+gameImgList.get(i).attr("src"));
            linkList.add(url+gameNameList.get(i).attr("href"));
            dateList.add(gameYearList.get(i).text());
            platformList.add(gamePlatformsList.get(i).text());
-
-
-
        }
-            System.out.println(imgList);
+        
 
            model.addAttribute("gameName", nameList);
+           model.addAttribute("link", linkList);
            model.addAttribute("imgSrc",imgList);
            model.addAttribute("platform",platformList);
-
-
-
-
-
-
-
-
-
-
-
+           
+        
 
     }
+
+
+
+    @GetMapping("/gamePage")
+    public String redirectToGame(Model model, @RequestParam String link, @RequestParam String gameName) throws IOException{
+        System.out.println(link);
+        
+        Document doc = Jsoup.connect(link).timeout(90000).get();
+        Elements tableInfo = doc.select(".gameInfo");
+        Elements description = doc.select(".gameDescription");
+        Elements links = doc.select(".extLinks");
+        Elements snapshots = doc.select(".screens");
+
+        model.addAttribute("gameDescription", description);
+        model.addAttribute("tab", tableInfo);
+        model.addAttribute("links", links );
+        model.addAttribute("snapshots", snapshots);
+
+
+        return "gamePage";
+    }
+
 
 
 }
