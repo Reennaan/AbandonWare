@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,24 +35,126 @@
         </div>
       </nav>
 
-      <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <h1 class="display-4">games forgotten by god and the world</h1>
-          <p class="lead">my dick is huge but its just a glorified sensory nerve its nothing to be embarrassed about</p>
+      <div class="jumbotron jumbotron-fluid mx-auto">
+        <div class="container-jumb text-center">
+          <h1 class="display-4 mx-auto" th:text="${gameName}"></h1>
         </div>
       </div>
 
-      <div id="data-container">
+
+
+      <table class="table-details table table-bordered table-striped mx-auto bg-dark table-dark">
+         
+            <tbody>
+              <tr>
+                <td>Alt Name</td>
+                <td th:text="${altName}"></td>
+              </tr>
+              <tr>
+                <td>Year</td>
+                <td th:text="${year}"></td>
+              </tr>
+
+              <tr>
+                <td>Platform</td>
+                <td th:text="${platform}"></td>
+              </tr>
+
+              <tr>
+                <td>Released In</td>
+                <td th:text="${released}"></td>
+              </tr>
+              
+              <tr>
+                <td>Genre</td>
+                <td th:text="${genre}"></td>
+              </tr>
+              
+              <tr>
+                <td>Theme</td>
+                <td th:text="${theme}"></td>
+              </tr>
+              
+              <tr>
+                <td>Publisher</td>
+                <td th:text="${publisher}"></td>
+              </tr>
+              
+              <tr>
+                <td>Developer</td>
+                <td th:text="${developer}"></td>
+              </tr>
+              <tr>
+                <td>Perspectives</td>
+                <td th:text="${perspectives}"></td>
+              </tr>
+              <tr>
+                <td>Tested On</td>
+                <td th:text="${testedOn}"></td>
+              </tr>
+              
+            </tbody>
+
+      </table>
+
+
+      <p class="text-center">
+        <a class="btn btn-info mx-auto" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1" th:text="'Download links '+ ${download}"></a>
+      </p>      
+      <div class="row">
+        <div class="col">
+          <div class="collapse multi-collapse text-center" id="multiCollapseExample1">
+            <div class="card-colapse card card-body mx-auto">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+     
+     
+
+
+
+      <div id="data-container" class="mx-auto">
         <div id="tab" th:data-tab="${tab}" ></div>
-        <div id="desc" th:data-desc="${gameDescription}" ></div>
+        
+        
+          <div id="desc" th:data-desc="${gameDescription}"></div>
+          <div class="text-center">
+            <h1 class="lead readMoreBtn mx-auto">Read Full Description</h1>
+          </div>
+          
+
         <div id="links" th:data-links="${links}"></div>
         <div id="snapshots" th:data-snapshots="${snapshots}"></div>
       </div>
       
       
       
-
+      
       <script>
+        
+        document.querySelectorAll(".readMoreBtn").forEach(button => {
+        button.addEventListener("click", function(e) {
+          e.preventDefault();
+          const description = document.getElementById("desc");
+          
+          if (description.classList.contains("expanded")) {
+            description.classList.remove("expanded");
+            description.style.display = "-webkit-box";
+            description.style.webkitLineClamp = "16";
+            description.style.maxHeight = "22em";
+            this.textContent = "Read more";
+          } else {
+            description.classList.add("expanded");
+            description.style.display = "block";
+            description.style.webkitLineClamp = "unset";
+            description.style.maxHeight = "none";
+            this.textContent = "Read less";
+          } 
+        });
+      });
+
 
         document.addEventListener("DOMContentLoaded", function() {
           createDesc();
@@ -79,6 +182,50 @@
         body{
           color: white;
         }
+        #data-container{
+          
+          
+          
+          width: 60rem;
+        }
+        .table-details{
+          width: 60rem;
+        }
+
+        .c-game__read-more{
+          display: none;
+        }
+
+        #desc {
+          display: -webkit-box;
+          -webkit-line-clamp: 16;       
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          position: relative;
+          max-height: 22em;             
+        }
+
+        #desc::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 12em;
+          background: linear-gradient(to bottom, rgba(255,255,255,0), #1a1a1a);
+          pointer-events: none;
+        }
+        #desc.expanded::after {
+          display: none;
+        }
+        .readMoreBtn{
+          cursor: pointer;
+        }
+        .card-colapse{
+          padding: 50px;
+          width: 200px;
+        }
+
       </style>
     
 </body>
