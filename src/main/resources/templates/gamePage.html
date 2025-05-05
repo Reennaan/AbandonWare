@@ -98,25 +98,15 @@
       </table>
 
 
-      <p class="text-center">
-        <a class="btn btn-info mx-auto" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1" th:text="'Download links '+ ${download}"></a>
-      </p>      
-      <div class="row">
-        <div class="col">
-          <div class="collapse multi-collapse text-center" id="multiCollapseExample1">
-            <div class="card-colapse card card-body mx-auto">
-              
-            </div>
-          </div>
-        </div>
-      </div>
+
      
      
 
-
-
+      <div id="links" th:data-links="${links}" style="display: none;"></div>
+      
       <div id="data-container" class="mx-auto">
         <div id="tab" th:data-tab="${tab}" ></div>
+        
         
         
           <div id="desc" th:data-desc="${gameDescription}"></div>
@@ -125,10 +115,22 @@
           </div>
           
 
-        <div id="links" th:data-links="${links}"></div>
+    
         <div id="snapshots" th:data-snapshots="${snapshots}"></div>
       </div>
       
+      <p class="text-center">
+        <a class="btn btn-info mx-auto" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1" th:text="'Download links '+ ${download}"></a>
+      </p>      
+      <div class="row">
+        <div class="col">
+          <div class="collapse multi-collapse text-center" id="multiCollapseExample1">
+            <div id="card-colapse" class="card-colapse card card-body mx-auto">
+              
+            </div>
+          </div>
+        </div>
+      </div>
       
       
       
@@ -158,14 +160,31 @@
 
         document.addEventListener("DOMContentLoaded", function() {
           createDesc();
+          createDownloadButtons();
         });
+
+        function createDownloadButtons(){
+          const links = document.getElementById("links").getAttribute("data-links");
+          const linkList = JSON.parse(links);
+          const cardColapse = document.getElementById("card-colapse")
+
+          linkList.forEach((link, index) => {
+          const button = document.createElement("a");
+          button.href = link;
+          button.className = "btn btn-info m-1";
+          button.target = "_blank";
+          button.innerText = "Download";
+          cardColapse.appendChild(button);
+      });
+          
+        }
 
 
         function createDesc(){
           
           const tab = document.getElementById("tab");
           const desc = document.getElementById("desc");
-          const links = document.getElementById("links");
+          
           const snapshots = document.getElementById("snapshots");
 
 
@@ -222,9 +241,14 @@
           cursor: pointer;
         }
         .card-colapse{
+         
+          
+          align-items: center;
           padding: 50px;
-          width: 200px;
+          width: fit-content !important;
+          height: 20rem !important;
         }
+        
 
       </style>
     

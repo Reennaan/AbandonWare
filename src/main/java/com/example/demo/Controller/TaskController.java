@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Model.Table;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,7 +79,14 @@ public class TaskController {
             description = doc.select(".gameInstruction");
         }
         Elements snapshots = doc.select(".screens");
-        String download = doc.select("a[href='#download'] > span").text(); //muito útil
+        String size = doc.select("a[href='#download'] > span").text(); //muito útil
+        Elements links = docDownload.select("a[class='button download']");
+        Elements ctext = docDownload.select("c-download");
+        List<String> hrefs = links.stream().map(l -> url+l.attr("href")).toList();
+        Gson gson = new Gson();
+        String hrefsArray = gson.toJson(hrefs);
+
+
 
         Table table = new Table();
 
@@ -104,13 +112,13 @@ public class TaskController {
         model.addAttribute("perspectives", table.getPerspectives());
         model.addAttribute("testedOn", table.getTestedOn());
 
-        System.out.println(download);
+        System.out.println(hrefs);
 
         model.addAttribute("gameDescription", description);
         model.addAttribute("gameName", gameName);
-        model.addAttribute("download", download);
+        model.addAttribute("download", size);
         //model.addAttribute("tab", tableInfo);
-        //model.addAttribute("links", links );
+        model.addAttribute("links", hrefsArray );
         //model.addAttribute("snapshots", snapshots);
 
 
