@@ -89,7 +89,7 @@ public class TaskController {
         
 
 
-        List<String> hrefs = links.stream().map(l -> url+l.attr("href")).toList();
+        List<String> hrefs = links.stream().map(l -> (l.toString().substring(0).equals("/")) ?  l.attr("href") : url+l.attr("href")).toList();
         
         String hrefsArray = gson.toJson(hrefs);
 
@@ -119,7 +119,7 @@ public class TaskController {
         model.addAttribute("perspectives", table.getPerspectives());
         model.addAttribute("testedOn", table.getTestedOn());
 
-        
+        System.out.println(hrefsArray);
 
         model.addAttribute("gameDescription", description);
         model.addAttribute("gameName", gameName);
