@@ -103,6 +103,7 @@
      
 
       <div id="links" th:data-links="${links}" style="display: none;"></div>
+      <div id="downloadName" th:data-downloadName="${downloadName}" style="display: none;"></div>
       
       <div id="data-container" class="mx-auto">
         <div id="tab" th:data-tab="${tab}" ></div>
@@ -120,13 +121,20 @@
       </div>
       
       <p class="text-center">
-        <a class="btn btn-info mx-auto" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1" th:text="'Download links '+ ${download}"></a>
+        <a class="btn btn-info mx-auto" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" th:text="'Download links '+ ${download}"></a>
       </p>      
       <div class="row">
-        <div class="col">
+        <div class="col" id="col">
           <div class="collapse multi-collapse text-center" id="multiCollapseExample1">
             <div id="card-colapse" class="card-colapse card card-body mx-auto">
-              
+              <table class="table table-bordered table-dark">
+                <tbody id = "nameRow">
+                  <tr>
+                    <td>Mark</td>
+                  </tr>
+                </tbody>
+              </table>
+
             </div>
           </div>
         </div>
@@ -165,18 +173,45 @@
 
         function createDownloadButtons(){
           const links = document.getElementById("links").getAttribute("data-links");
+          const downloadName = document.getElementById("downloadName").getAttribute("data-downloadName")
+          const downloadNameList = JSON.parse(downloadName);
           const linkList = JSON.parse(links);
+          console.log(downloadNameList)
           const cardColapse = document.getElementById("card-colapse")
+          const nameRow = document.getElementById("nameRow");
 
           linkList.forEach((link, index) => {
-          const button = document.createElement("a");
-          button.href = link;
-          button.className = "btn btn-info m-1";
-          button.target = "_blank";
-          button.innerText = "Download";
-          cardColapse.appendChild(button);
-      });
-          
+            const newTr = document.createElement("tr"); // Nova linha
+            const newTd = document.createElement("td"); // Nova célula
+            const button = document.createElement("a"); // Botão/link
+
+            button.className = "btn btn-info mx-auto";
+            button.href = link;
+            button.textContent = downloadNameList[index]; // Nome do botão
+
+            newTd.appendChild(button);  // Insere o botão na célula
+            newTr.appendChild(newTd);   // Insere a célula na linha
+            nameRow.appendChild(newTr); // Insere a linha no <tbody>
+          });
+
+
+
+
+
+
+
+
+
+          /*linkList.forEach((link, index) => {
+            const button = document.createElement("a");
+            button.href = link;
+            button.className = "btn btn-info m-1";
+            button.target = "_blank";
+            button.innerText = "Download";
+            cardColapse.appendChild(button);
+        });*/
+
+
         }
 
 
@@ -241,13 +276,16 @@
           cursor: pointer;
         }
         .card-colapse{
-         
+          background-color: #1a1a1a;
+          border: none;
+          padding: 20px;
+          width: fit-content;
+          height: 20rem;
           
-          align-items: center;
-          padding: 50px;
-          width: fit-content !important;
-          height: 20rem !important;
+          display: flex;
+          
         }
+        
         
 
       </style>

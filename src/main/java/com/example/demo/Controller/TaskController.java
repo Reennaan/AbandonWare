@@ -70,7 +70,7 @@ public class TaskController {
     @GetMapping("/gamePage")
     public String redirectToGame(Model model, @RequestParam String link, @RequestParam String gameName) throws IOException{
         
-        
+        Gson gson = new Gson();
         Document doc = Jsoup.connect(link).timeout(90000).get();
         Document docDownload = Jsoup.connect(link+"#download").timeout(90000).get();
         Elements tableInfo = doc.select(".gameInfo");
@@ -81,9 +81,16 @@ public class TaskController {
         Elements snapshots = doc.select(".screens");
         String size = doc.select("a[href='#download'] > span").text(); //muito útil
         Elements links = docDownload.select("a[class='button download']");
-        Elements ctext = docDownload.select("c-download");
+        Elements downloadName = docDownload.select(".c-download__text");
+        
+        List<String> downloadNameList = downloadName.stream().map(l -> l.text()).toList();
+        String downloadListJson = gson.toJson(downloadNameList);
+        
+        
+
+
         List<String> hrefs = links.stream().map(l -> url+l.attr("href")).toList();
-        Gson gson = new Gson();
+        
         String hrefsArray = gson.toJson(hrefs);
 
 
@@ -112,13 +119,15 @@ public class TaskController {
         model.addAttribute("perspectives", table.getPerspectives());
         model.addAttribute("testedOn", table.getTestedOn());
 
-        System.out.println(hrefs);
+        
 
         model.addAttribute("gameDescription", description);
         model.addAttribute("gameName", gameName);
         model.addAttribute("download", size);
+        //model.addAttribute("ctext", ctext);
         //model.addAttribute("tab", tableInfo);
         model.addAttribute("links", hrefsArray );
+        model.addAttribute("downloadName", downloadListJson);
         //model.addAttribute("snapshots", snapshots);
 
 
