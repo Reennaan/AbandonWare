@@ -120,7 +120,7 @@
         <div id="snapshots" th:data-snapshots="${snapshots}"></div>
       </div>
       
-      <p class="text-center">
+      <p class="text-center btn-download">
         <a class="btn btn-info mx-auto" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" th:text="'Download links '+ ${download}"></a>
       </p>      
       <div class="row">
@@ -278,12 +278,15 @@
         .card-colapse{
           background-color: #1a1a1a;
           border: none;
-          padding: 20px;
+          
           width: fit-content;
           height: 20rem;
           
           display: flex;
           
+        }
+        .btn-download{
+          padding-top: 35px;
         }
         
         

@@ -46,44 +46,59 @@
 
     <div class="container-fluid">
  
-      <div class="col-md-9">
-        <div class="row">
-          <div class="col-md-4 mb-4" th:each="gameName, stat : ${gameName}">
-            <div class="card h-100 card-games">
-              <a class="linkRef" th:data-link="${link[stat.index]}" th:data-gameName="${gameName}" onclick="redirectToGame(this)">
-                <img th:src="${imgSrc[stat.index]}" class="gameImg" >
-              
-              <div class="card-body">
-                <p class="card-text" th:text="${#strings.abbreviate(gameName,25)}" th:title="${gameName}"></p>
+      <div class="card text-white bg-dark" id="card-container">
+        <div class="card-body">
+          <h5 class="card-title">Trending games</h5>
+      
+          <div class="row">
+            
+            <div class="col-md-9" id="game-card">
+              <div class="row g-4" id="row-games">
+                <div class="col-md-3 mb-4" th:each="gameName, stat : ${gameName}">
+                  <div class="card h-100 card-games">
+                    <a class="linkRef text-decoration-none" th:data-link="${link[stat.index]}" th:data-gameName="${gameName}" onclick="redirectToGame(this)">
+                      <img th:src="${imgSrc[stat.index]}" class="gameImg">
+                      <div class="card-body">
+                        <p class="card-text" th:text="${#strings.abbreviate(gameName,25)}" th:title="${gameName}"></p>
+                      </div>
+                    </a>
+                    <ul class="platform list-group list-group-flush">
+                      <li class="platform list-group-item" th:text="${#strings.abbreviate(platform[stat.index],40)}" th:title="${platform[stat.index]}"></li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              </a>
-              <ul class="platform list-group list-group-flush">
-                <li class="platform list-group-item" th:text="${#strings.abbreviate(platform[stat.index],40)}" th:title="${platform[stat.index]}"></li>
-              </ul>
+            </div>
+      
+            
+            <div class="col-md-3">
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">Atari 2600</a>
+                <a href="#" class="list-group-item list-group-item-action">Atari 5200</a>
+                <a href="#" class="list-group-item list-group-item-action">Atari 7800</a>
+                <a href="#" class="list-group-item list-group-item-action">Atari 8-bit</a>
+                <a href="#" class="list-group-item list-group-item-action">Sega Saturn</a>
+                <a href="#" class="list-group-item list-group-item-action">Sega CD</a>
+                <a href="#" class="list-group-item list-group-item-action">Master System</a>
+                <a href="#" class="list-group-item list-group-item-action">Neo Geo</a>
+                <a href="#" class="list-group-item list-group-item-action">Jaguar</a>
+                <a href="#" class="list-group-item list-group-item-action">Game Gear</a>
+                <a href="#" class="list-group-item list-group-item-action">Commodore 64</a>
+                <a href="#" class="list-group-item list-group-item-action">DOS</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      
+      </div>
+
+
+
+      
   
       
-      <div class="col-md-3">
-        
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Atari 2600</a>
-            <a href="#" class="list-group-item list-group-item-action">Atari 5200</a>
-            <a href="#" class="list-group-item list-group-item-action">Atari 7800</a>
-            <a href="#" class="list-group-item list-group-item-action">Atari 8-bit</a>
-            <a href="#" class="list-group-item list-group-item-action">Sega Saturn</a>
-            <a href="#" class="list-group-item list-group-item-action">Sega CD</a>
-            <a href="#" class="list-group-item list-group-item-action">Master System</a>
-            <a href="#" class="list-group-item list-group-item-action">Neo Geo</a>
-            <a href="#" class="list-group-item list-group-item-action">Jaguar</a>
-            <a href="#" class="list-group-item list-group-item-action">Game Gear</a>
-            <a href="#" class="list-group-item list-group-item-action">Commodore 64</a>
-            <a href="#" class="list-group-item list-group-item-action">DOS</a>
-          </div>
-       
-      </div>
+      
               
        
 
