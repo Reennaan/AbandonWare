@@ -21,18 +21,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">greed</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Name</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">wrath</a>
+              <a class="nav-link" href="#">genre</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">envy</a>
+              <a class="nav-link" href="#">Platform</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">lust</a>
+              <a class="nav-link" href="#">Year</a>
             </li>
+
           </ul>
         </div>
       </nav>
@@ -44,6 +45,20 @@
         </div>
       </div>
 
+
+
+      <div class="input-group mx-auto" data-bs-theme="dark">
+        <input id="searchInput" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init onclick="searchScreen()">search</button>
+      </div>
+
+
+
+
+
+
+
+
     <div class="container-fluid">
  
       <div class="card text-white bg-dark" id="card-container">
@@ -52,39 +67,25 @@
       
           <div class="row">
             
-            <div class="col-md-9" id="game-card">
-              <div class="row g-4" id="row-games">
-                <div class="col-md-3 mb-4" th:each="gameName, stat : ${gameName}">
-                  <div class="card h-100 card-games">
-                    <a class="linkRef text-decoration-none" th:data-link="${link[stat.index]}" th:data-gameName="${gameName}" onclick="redirectToGame(this)">
-                      <img th:src="${imgSrc[stat.index]}" class="gameImg">
-                      <div class="card-body">
-                        <p class="card-text" th:text="${#strings.abbreviate(gameName,25)}" th:title="${gameName}"></p>
-                      </div>
-                    </a>
-                    <ul class="platform list-group list-group-flush">
-                      <li class="platform list-group-item" th:text="${#strings.abbreviate(platform[stat.index],40)}" th:title="${platform[stat.index]}"></li>
-                    </ul>
-                  </div>
+            <div class="col-md-11" id="game-card">
+              <div class="row gx-5" id="row-games">
+                <div class="col-lg-3 col-md-4 col-sm-6" th:each="gameName, stat : ${gameName}">
+
+                  
+                    <div class="card h-100 card-games">
+                      <a class="linkRef text-decoration-none" th:data-link="${link[stat.index]}" th:data-gameName="${gameName}" onclick="redirectToGame(this)">
+                        <img th:src="${imgSrc[stat.index]}" class="gameImg">
+                        <div class="card-body">
+                          <p class="card-text" th:text="${#strings.abbreviate(gameName,25)}" th:title="${gameName}"></p>
+                        </div>
+                      </a>
+                      <ul class="platform list-group list-group-flush">
+                        <li class="platform list-group-item" th:text="${#strings.abbreviate(platform[stat.index],40)}" th:title="${platform[stat.index]}"></li>
+                      </ul>
+                    </div>
+                 
+
                 </div>
-              </div>
-            </div>
-      
-            
-            <div class="col-md-3">
-              <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">Atari 2600</a>
-                <a href="#" class="list-group-item list-group-item-action">Atari 5200</a>
-                <a href="#" class="list-group-item list-group-item-action">Atari 7800</a>
-                <a href="#" class="list-group-item list-group-item-action">Atari 8-bit</a>
-                <a href="#" class="list-group-item list-group-item-action">Sega Saturn</a>
-                <a href="#" class="list-group-item list-group-item-action">Sega CD</a>
-                <a href="#" class="list-group-item list-group-item-action">Master System</a>
-                <a href="#" class="list-group-item list-group-item-action">Neo Geo</a>
-                <a href="#" class="list-group-item list-group-item-action">Jaguar</a>
-                <a href="#" class="list-group-item list-group-item-action">Game Gear</a>
-                <a href="#" class="list-group-item list-group-item-action">Commodore 64</a>
-                <a href="#" class="list-group-item list-group-item-action">DOS</a>
               </div>
             </div>
           </div>
@@ -114,6 +115,15 @@
       
         window.location.href = "/gamePage?link=" + encodeURIComponent(link)+"&gameName="+ encodeURIComponent(gameName);
       }
+
+      function searchScreen(){
+        const name = document.getElementById("searchInput").value;
+        if(name.value !== ""){
+          window.location.href = `/search/q/${name}`;
+        }
+        
+      }
+
       </script>
 </body>
 </html>

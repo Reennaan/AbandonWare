@@ -134,6 +134,15 @@ public class TaskController {
         return "gamePage";
     }
 
+    @GetMapping("/search/q/{name}")
+    public String search(@PathVariable String name , Model model){
+        
+
+
+
+        return "search";
+    }
+
 
 
 }
