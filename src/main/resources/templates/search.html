@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
@@ -9,8 +10,8 @@
 <body>
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-custom">
-        <a class="navbar-brand" href="#">
-          <img th:src="@{/src/main/resources/static/img/mendigokkk.png}" width="40" height="40" alt="" >
+        <a class="navbar-brand" href="#" onclick="redirectToHome()">
+          <img th:src="@{/img/mendigokkk.png}" width="50" height="50" alt="" >
           AbanadonWare
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,6 +31,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Year</a>
             </li>
+            
 
           </ul>
         </div>
@@ -37,12 +39,78 @@
 
       <div class="jumbotron jumbotron-fluid">
         <div class="container">
-          <h1 class="display-4">games forgotten by god and the world</h1>
-          <p class="lead">my dick is huge but its just a glorified sensory nerve its nothing to be embarrassed about</p>
+          <h1 class="display-4" th:text="'Search results for: ' + ${searchName}"></h1>
         </div>
       </div>
 
 
+
+      
+      <div class="container-fluid">
+ 
+      <div class="card text-white bg-dark" id="card-container">
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+      
+          <div class="row">
+            
+            <div class="col-md-11" id="game-card">
+              <div class="row gx-5" id="row-games">
+                <div class="col-lg-3 col-md-4 col-sm-6" th:each="gameName, stat : ${gameName}">
+
+                  
+                    <div class="card h-100 card-games">
+                      <a class="linkRef text-decoration-none" th:data-link="${link[stat.index]}" th:data-gameName="${gameName}" onclick="redirectToGame(this)">
+                        <img th:src="${imgSrc[stat.index]}" class="gameImg">
+                        <div class="card-body">
+                          <p class="card-text" th:text="${#strings.abbreviate(gameName,25)}" th:title="${gameName}"></p>
+                        </div>
+                      </a>
+                      <ul class="platform list-group list-group-flush">
+                        <li class="platform list-group-item" th:text="${#strings.abbreviate(platform[stat.index],40)}" th:title="${platform[stat.index]}"></li>
+                      </ul>
+                    </div>
+                 
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      </div>
+
+
+
+      
+  
+      
+      
+              
+       
+
+
+         
+
+    </div>
+
+
+
+
+<script>
+  function redirectToGame(element) {
+    var link = element.getAttribute("data-link")
+    var gameName = element.getAttribute("data-gameName")
+      
+    window.location.href = "/gamePage?link=" + encodeURIComponent(link)+"&gameName="+ encodeURIComponent(gameName);
+  }
+
+  function redirectToHome(){
+    window.location.href = "/"
+  }
+
+</script>
 
 </body>
 <style>

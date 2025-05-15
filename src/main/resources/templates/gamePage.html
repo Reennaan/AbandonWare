@@ -10,8 +10,8 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-custom">
-        <a class="navbar-brand" href="#">
-          <img th:src="@{/src/main/resources/static/img/mendigokkk.png}" width="40" height="40" alt="" >
+        <a class="navbar-brand" href="#" onclick="redirectToHome()">
+          <img th:src="@{/img/mendigokkk.png}" width="50" height="50" alt="" >
           AbanadonWare
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,13 +20,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">greed</a>
+              <a class="nav-link" href="#">Name</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">wrath</a>
+              <a class="nav-link" href="#">Year</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">envy</a>
+              <a class="nav-link" href="#">Platform</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">lust</a>
@@ -37,7 +37,7 @@
 
       <div class="jumbotron jumbotron-fluid mx-auto">
         <div class="container-jumb text-center">
-          <h1 class="display-4 mx-auto" th:text="${gameName}"></h1>
+          <h1 class="display-4 mx-auto" id="name" th:text="${gameName}"></h1>
         </div>
       </div>
 
@@ -112,7 +112,7 @@
         
           <div id="desc" th:data-desc="${gameDescription}"></div>
           <div class="text-center">
-            <h1 class="lead readMoreBtn mx-auto">Read Full Description</h1>
+            <h1 class="lead readMoreBtn mx-auto" id="readMoreBtn">Read Full Description</h1>
           </div>
           
 
@@ -144,6 +144,7 @@
       
       <script>
         
+        
         document.querySelectorAll(".readMoreBtn").forEach(button => {
         button.addEventListener("click", function(e) {
           e.preventDefault();
@@ -161,7 +162,13 @@
             description.style.webkitLineClamp = "unset";
             description.style.maxHeight = "none";
             this.textContent = "Read less";
-          } 
+          }
+          if(description.textContent == ""){
+            this.textContent = ""
+          }
+          
+
+
         });
       });
 
@@ -169,7 +176,11 @@
         document.addEventListener("DOMContentLoaded", function() {
           createDesc();
           createDownloadButtons();
+          const name = document.getElementById("name");
+          document.title = name.textContent
         });
+
+        
 
         function createDownloadButtons(){
           const links = document.getElementById("links").getAttribute("data-links");
@@ -181,36 +192,18 @@
           const nameRow = document.getElementById("nameRow");
 
           linkList.forEach((link, index) => {
-            const newTr = document.createElement("tr"); // Nova linha
-            const newTd = document.createElement("td"); // Nova célula
-            const button = document.createElement("a"); // Botão/link
+            const newTr = document.createElement("tr"); 
+            const newTd = document.createElement("td"); 
+            const button = document.createElement("a"); 
 
             button.className = "btn btn-info mx-auto";
             button.href = link;
-            button.textContent = downloadNameList[index]; // Nome do botão
+            button.textContent = downloadNameList[index]; 
 
-            newTd.appendChild(button);  // Insere o botão na célula
-            newTr.appendChild(newTd);   // Insere a célula na linha
-            nameRow.appendChild(newTr); // Insere a linha no <tbody>
+            newTd.appendChild(button);  
+            newTr.appendChild(newTd);   
+            nameRow.appendChild(newTr); 
           });
-
-
-
-
-
-
-
-
-
-          /*linkList.forEach((link, index) => {
-            const button = document.createElement("a");
-            button.href = link;
-            button.className = "btn btn-info m-1";
-            button.target = "_blank";
-            button.innerText = "Download";
-            cardColapse.appendChild(button);
-        });*/
-
 
         }
 
@@ -219,6 +212,7 @@
           
           const tab = document.getElementById("tab");
           const desc = document.getElementById("desc");
+          const read = document.getElementById("readMoreBtn");
           
           const snapshots = document.getElementById("snapshots");
 
@@ -226,10 +220,19 @@
 
           tab.innerHTML = tab.getAttribute("data-tab")
           desc.innerHTML = desc.getAttribute("data-desc")
+          if(desc.textContent == ""){
+            read.textContent = "";
+          }
+          
           links.innerHTML = links.getAttribute("data-links")
           snapshots.innerHTML = snapshots.getAttribute("data-snapshots")
         
         }
+
+        function redirectToHome(){
+          window.location.href = "/"
+        }
+
       </script>
 
       <style>
